@@ -1,5 +1,9 @@
 # Ne mondd így angolul
 
+Élő oldal: [Ne mondd így angolul](https://pleberino22.github.io/ne-mondd-igy-angolul/)
+
+A `main` ágra feltöltött módosításokat a GitHub Pages munkafolyamat automatikusan közzéteszi.
+
 Marosi Helga könyvének reszponzív, magyar nyelvű bemutatkozó oldala. A borítóhoz illeszkedő, könyvközpontú megjelenés: egyszerű szöveges fejléc, jól felismerhető gombok, interaktív mondatpéldák, fejezetlista, szerzői bemutatkozás, ár és gyakori kérdések. Nincs kitalált logó, díszmonogram, nyíl vagy számozott szekciófelcím.
 
 Az oldal egyszerű HTML-, CSS- és JavaScript-fájlokból áll. Nincs szükség telepítésre, fordításra, adatbázisra vagy külső betűtípus-szolgáltatásra.
@@ -30,7 +34,7 @@ Alternatívaként a **Deploy from a branch → main → / (root)** beállítás 
 - **Vásárlási link:** a `site-config.js` fájl `purchaseUrl` mezőjébe írd be a valódi, `https://` kezdetű vásárlási címet. A gomb ekkor automatikusan oda vezet. Üresen hagyva a helyőrző párbeszédablak jelenik meg.
 - **Szerzői portré:** az `index.html` fájl `author-portrait` elemét cseréld valódi képre. Adj meg értelmes alternatív szöveget, szélességet és magasságot. A hozzá tartozó CSS a `styles.css` fájlban található.
 - **Árak és szövegek:** az `index.html` fájlban szerkeszthetők. Az árazás a kapott szövegtervezetet követi.
-- **Közösségi megosztás:** amikor megvan a végleges publikus cím, az `og:image` értékét állítsd a borító teljes, abszolút publikus URL-jére. Ekkor érdemes `og:url` és canonical metaadatot is megadni.
+- **Közösségi megosztás:** az `og:image`, az `og:url` és a canonical hivatkozás a fenti GitHub Pages-címre mutat. Saját domain beállításakor ezeket is frissítsd.
 
 ## Jelenlegi helyőrzők
 
