@@ -6,7 +6,7 @@
 
   // Rövid, csoportonként eltolt megjelenés, egyszer minden elemnél.
   document.querySelectorAll('.stagger-list, .stagger-copy').forEach((group) => {
-    [...group.children].forEach((element, index) => {
+    [...group.children].flatMap((element) => element.matches('ol') ? [...element.children] : [element]).forEach((element, index) => {
       element.classList.add('reveal');
       element.style.setProperty('--reveal-delay', `${Math.min(index * 75, 225)}ms`);
     });
@@ -83,17 +83,12 @@
     meeting: {
       before: '“We have a problem and we are slipping from the deadline.”',
       after: '“We\'ve run into an issue and we\'re slightly behind schedule.”',
-      explanation: 'A probléma ugyanaz. A megfogalmazás higgadtabb és természetesebb.',
+      explanation: 'Mindkettő érthető. Az egyiknél mindenki összerezzen. A másiknál bólintanak, és megy tovább a meeting.',
     },
     explain: {
       before: '“I explain.”',
       after: '“Let me explain.”',
-      explanation: 'Két apró szó, és máris természetesebben vezeted be a gondolatodat.',
-    },
-    clarify: {
-      before: '“Speak slower. I don\'t understand.”',
-      after: '“Could you say that a little more slowly, please?”',
-      explanation: 'Ugyanazt kéred. A hangnem udvariasabb, a kérés könnyebben fogadható.',
+      explanation: 'Értelmes? Igen. Angolos? Nem igazán.',
     },
   };
   const tabs = [...document.querySelectorAll('[data-example]')];
@@ -257,8 +252,9 @@
   }, { passive: true });
   updateBook();
 
-  const dialog = document.getElementById('purchase-dialog');
-  let closingDialog;
+  const purchaseDialog = document.getElementById('purchase-dialog');
+  const notifyDialog = document.getElementById('notify-dialog');
+  const closingDialogs = new Map();
   let purchaseUrl;
   try {
     const candidate = new URL(window.BOOK_SITE?.purchaseUrl || '');
@@ -268,34 +264,40 @@
   document.querySelectorAll('[data-purchase]').forEach((button) => {
     button.addEventListener('click', () => {
       if (purchaseUrl) window.location.assign(purchaseUrl);
-      else dialog.showModal();
+      else purchaseDialog.showModal();
     });
   });
-  function closeDialog() {
-    if (!dialog.open || closingDialog) return;
+  document.querySelectorAll('[data-notify]').forEach((button) => {
+    button.addEventListener('click', () => notifyDialog.showModal());
+  });
+  function closeDialog(dialog) {
+    if (!dialog.open || closingDialogs.has(dialog)) return;
     if (motion.matches) {
       dialog.close();
       return;
     }
-    closingDialog = dialog.animate([
+    const animation = dialog.animate([
       { opacity: 1, transform: 'translateY(0) scale(1)' },
       { opacity: 0, transform: 'translateY(7px) scale(.985)' },
     ], { duration: 180, easing: 'ease-in', fill: 'forwards' });
-    closingDialog.finished.then(() => {
+    closingDialogs.set(dialog, animation);
+    animation.finished.then(() => {
       dialog.close();
-      closingDialog.cancel();
-      closingDialog = null;
+      animation.cancel();
+      closingDialogs.delete(dialog);
     }, () => {});
   }
-  dialog.querySelectorAll('.dialog-close, .dialog-done').forEach((button) => button.addEventListener('click', closeDialog));
-  dialog.addEventListener('cancel', (event) => {
-    event.preventDefault();
-    closeDialog();
-  });
-  dialog.addEventListener('click', (event) => {
-    if (event.target !== dialog) return;
-    const bounds = dialog.getBoundingClientRect();
-    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeDialog();
+  [purchaseDialog, notifyDialog].forEach((dialog) => {
+    dialog.querySelectorAll('.dialog-close, .dialog-done').forEach((button) => button.addEventListener('click', () => closeDialog(dialog)));
+    dialog.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      closeDialog(dialog);
+    });
+    dialog.addEventListener('click', (event) => {
+      if (event.target !== dialog) return;
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeDialog(dialog);
+    });
   });
   motion.addEventListener('change', () => {
     if (!motion.matches) return;
@@ -307,11 +309,11 @@
     closeMenu(true);
     book.style.transform = '';
     updateBook();
-    if (closingDialog) {
-      closingDialog.cancel();
-      closingDialog = null;
+    closingDialogs.forEach((animation, dialog) => {
+      animation.cancel();
       dialog.close();
-    }
+    });
+    closingDialogs.clear();
   });
   document.getElementById('year').textContent = new Date().getFullYear();
 })();

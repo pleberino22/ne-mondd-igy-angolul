@@ -4,7 +4,9 @@
 
 A `main` ágra feltöltött módosításokat a GitHub Pages munkafolyamat automatikusan közzéteszi.
 
-Marosi Helga könyvének reszponzív, magyar nyelvű bemutatkozó oldala. A borítóhoz illeszkedő, könyvközpontú megjelenés: egyszerű szöveges fejléc, jól felismerhető gombok, interaktív mondatpéldák, fejezetlista, szerzői bemutatkozás, ár és gyakori kérdések. Nincs kitalált logó, díszmonogram, nyíl vagy számozott szekciófelcím.
+Marosi Helga könyvének reszponzív, magyar nyelvű bemutatkozó oldala. A borító vizuális folytatása: meleg papírszínek, mély sötétkék felületek, a fejléc alatti arany sáv és a borító városképének halvány háttérként való továbbvezetése. A hangsúly a könyvön és a szerző saját szövegén van.
+
+A kapott szövegtervezetből 35 teljes bekezdés szó szerint került át. A tíz tipikus hiba, az öt fejezet és az öt vásárlás előtti szempont animált, billentyűzettel is használható lenyíló részekben olvasható. A dokumentum szerkesztési utasításai és a meg nem határozott e-könyv-formátum nem jelennek meg a weboldalon.
 
 Az oldal egyszerű HTML-, CSS- és JavaScript-fájlokból áll. Nincs szükség telepítésre, fordításra, adatbázisra vagy külső betűtípus-szolgáltatásra.
 
@@ -38,7 +40,7 @@ Alternatívaként a **Deploy from a branch → main → / (root)** beállítás 
 
 ## Jelenlegi helyőrzők
 
-Az online vásárlás és a nyomtatott könyv még nem elérhető. Nincs fizetési vagy feliratkozási űrlap. A portré helyén egyértelműen jelölt, arculathoz illő helyőrző szerepel. Nincs kitalált kapcsolati adat, olvasói vélemény vagy külső szolgáltatás.
+Az online vásárlás és a nyomtatott könyv még nem elérhető. A vásárlási és az értesítési gomb külön helyőrző ablakot nyit; ezek még nem fogadnak fizetést vagy e-mail-címet. A portré helyén egyértelműen jelölt, arculathoz illő helyőrző szerepel. Nincs kitalált kapcsolati adat, olvasói vélemény vagy külső szolgáltatás.
 
 Az animációk között fokozatos címmegjelenés, könyvmozgás, finom mondatváltás és mozgó aktív fül, animált mobilmenü és magasság szerint nyíló fejezetek szerepelnek. A gyors egymás utáni kattintásokat és a méretváltozást is kezelik.
 
